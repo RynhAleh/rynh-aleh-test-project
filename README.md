@@ -1,0 +1,7 @@
+To run:
+Create the project structure and files as above.
+Run docker-compose up --build.
+Access frontend at http://localhost:3000 (backend at http://localhost:8000).
+Navigation supports back button via React Router.
+For testing, use curl as in the task.
+Unique selects in Page3 fetch all possible names by querying history with today's date (minimal, no extra endpoint).
