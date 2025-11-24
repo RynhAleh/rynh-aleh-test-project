@@ -1,6 +1,12 @@
-To run:
-Create the project structure and files as above.
-Run docker-compose up --build.
+## To run:
+Clone repository on your computer:
+```bash
+git clone https://github.com/RynhAleh/rynh-aleh-test-project.git && cd rynh-aleh-test-project
+```
+Run:
+```bash
+docker-compose up --build
+```
 Access frontend at http://localhost:3000 (backend at http://localhost:8000).
 Navigation supports back button via React Router.
 For testing, use curl as in the task.

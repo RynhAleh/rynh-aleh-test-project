@@ -38,6 +38,7 @@ input, select, button {
 .allocate-spinner {
 		height: 35px;
     align-content: space-evenly;
+    align-self: anchor-center;
 }
 .allocate-err {
 		height: 20px;
