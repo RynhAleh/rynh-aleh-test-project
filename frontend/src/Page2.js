@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Page2() {
   const [formData, setFormData] = useState({ date: '', first_name: '', last_name: '' });
@@ -18,7 +19,7 @@ function Page2() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:8000/api/submit', {
+      const response = await fetch(`${API_URL}/api/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

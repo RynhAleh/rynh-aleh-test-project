@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Page3() {
   const location = useLocation();
@@ -20,7 +21,7 @@ function Page3() {
     const fetchUniques = async () => {
       try {
         const today = new Date().toISOString().split('T')[0];
-        const response = await fetch(`http://localhost:8000/api/history?date=${today}`);
+        const response = await fetch(`${API_URL}/api/history?date=${today}`);
         const history = await response.json();
         const firstSet = new Set(history.items.map(item => item.first_name));
         const lastSet = new Set(history.items.map(item => item.last_name));
@@ -47,7 +48,7 @@ function Page3() {
         ...(filter.first_name && { first_name: filter.first_name }),
         ...(filter.last_name && { last_name: filter.last_name }),
       }).toString();
-      const response = await fetch(`http://localhost:8000/api/history?${query}`);
+      const response = await fetch(`${API_URL}/api/history?${query}`);
       const result = await response.json();
       setData(result);
       navigate(`/history?${query}`, { replace: true });
