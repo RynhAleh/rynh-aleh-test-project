@@ -1,12 +1,18 @@
 FROM python:3.12-slim
 
+RUN pip install poetry
+
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml poetry.lock .
 
-COPY app ./app
+RUN poetry config virtualenvs.create false \
+&& poetry install --only main --no-interaction --no-ansi
 
-ENV PYTHONPATH=/app
+COPY . .
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", " \
+#    python -m alembic revision --autogenerate -m 'initial' && \
+    python -m alembic upgrade head && \
+    exec uvicorn app.main:app --host 0.0.0.0 --port 80 \
+"]

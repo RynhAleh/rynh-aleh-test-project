@@ -1,50 +1,24 @@
-from fastapi import FastAPI, Depends, Request, status
-from fastapi.responses import JSONResponse
+import os
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
-from sqlalchemy.orm import Session
-from .crud import create_submission, get_history
-from .database import SessionLocal, engine, Base
+from .api.routers.submissions import router as submissions_router
 from .exceptions import validation_exception_handler
 from .middleware import RandomDelayMiddleware
-from .schemas import SubmissionCreate, SubmissionResponse, HistoryResponse
-from datetime import date
-from typing import Optional
 
 app = FastAPI()
 
-app.exception_handler(RequestValidationError)(validation_exception_handler)
+origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
+origins = [o.strip() for o in origins if o.strip()]
+
 app.add_middleware(RandomDelayMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-Base.metadata.create_all(bind=engine)
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-@app.post("/api/submit", response_model=SubmissionResponse)
-def submit(submission: SubmissionCreate, db: Session = Depends(get_db)):
-    try:
-        create_submission(db, submission.date, submission.first_name, submission.last_name)
-        return {"success": True}
-    except ValueError as e:
-        field = "first_name" if "first_name" in str(e) else "last_name"
-        return {"success": False, "error": {field: [str(e)]}}, 400
-
-
-@app.get("/api/history", response_model=HistoryResponse)
-def history(date: date, first_name: Optional[str] = None, last_name: Optional[str] = None,
-            db: Session = Depends(get_db)):
-    return get_history(db, date, first_name, last_name)
+app.exception_handler(RequestValidationError)(validation_exception_handler)
+app.include_router(submissions_router)

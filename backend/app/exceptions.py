@@ -1,17 +1,23 @@
-from fastapi import Request
+from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
+async def validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
     errors = {}
-    for error in exc.errors():
-        field = error["loc"][-1] if len(error["loc"]) > 1 else "general"
-        msg = error["msg"]
-        if "whitespace" in msg.lower():
-            msg = f"No whitespace in {field} is allowed"
+    for err in exc.errors():
+        field = err["loc"][-1]
+        msg = err["msg"]
+
+        if msg.lower().startswith("value error"):
+            if "," in msg:
+                msg = msg.split(",", 1)[1].strip()
+
         errors.setdefault(field, []).append(msg)
+
     return JSONResponse(
-        status_code=400,
+        status_code=status.HTTP_400_BAD_REQUEST,
         content={"success": False, "error": errors}
     )

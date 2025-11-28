@@ -12,7 +12,8 @@ class SubmissionCreate(BaseModel):
     @classmethod
     def no_whitespace(cls, v: str, info) -> str:
         if ' ' in v:
-            raise ValueError(f'No whitespace in {info.field_name} is allowed')
+            nice_field = info.field_name.replace('_', ' ')
+            raise ValueError(f'No whitespace in {nice_field} is allowed')
         return v
 
 
@@ -22,7 +23,7 @@ class SubmissionResponse(BaseModel):
 
 
 class HistoryItem(BaseModel):
-    date: str
+    date: date
     first_name: str
     last_name: str
     count: int
