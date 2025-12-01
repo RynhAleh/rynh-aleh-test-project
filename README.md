@@ -7,6 +7,15 @@ Run:
 ```bash
 docker-compose up --build
 ```
+To arrange development environment on your machine:
+```bash
+cd backend/ && poetry install && cd ..
+```
+To launch linters and tests before deployment:
+```bash
+./checkup.sh
+```
+
 The project is configured for easy evaluation (Development Mode):
 - Frontend runs on port 3000.
 - Backend runs on port 8000.

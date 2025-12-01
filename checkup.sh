@@ -1,7 +1,7 @@
 #!/bin/bash
 BLB='\033[44m';RDT='\033[91m';GNT='\033[92m';NC='\033[0m\n'
 
-if ! poetry --version; then printf $RDT"Please run 'poetry install' before."$NC; exit 1; fi
+if ! poetry --version; then printf $RDT"Please run 'cd backend/ && poetry install' before."$NC; exit 1; fi
 if ! cd backend/; then printf $RDT"Can't go to backend/ !!!"$NC; exit 1; fi
 
 printf $BLB'Launching ruff...'$NC
