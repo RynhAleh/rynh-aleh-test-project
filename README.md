@@ -3,6 +3,10 @@ Clone repository on your computer:
 ```bash
 git clone https://github.com/RynhAleh/rynh-aleh-test-project.git && cd rynh-aleh-test-project
 ```
+Clone secrets, if you don't have your own:
+```bash
+cp .env.example .env --update=none
+```
 To arrange development environment on your machine:
 ```bash
 cd backend/ && \
