@@ -9,7 +9,10 @@ docker-compose up --build
 ```
 To arrange development environment on your machine:
 ```bash
-cd backend/ && poetry install && cd ..
+cd backend/ && \
+poetry config virtualenvs.in-project true --local && \
+poetry install && \
+cd ..
 ```
 To launch linters and tests before deployment:
 ```bash
