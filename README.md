@@ -3,10 +3,6 @@ Clone repository on your computer:
 ```bash
 git clone https://github.com/RynhAleh/rynh-aleh-test-project.git && cd rynh-aleh-test-project
 ```
-Run:
-```bash
-docker-compose up --build
-```
 To arrange development environment on your machine:
 ```bash
 cd backend/ && \
@@ -14,9 +10,13 @@ poetry config virtualenvs.in-project true --local && \
 poetry install && \
 cd ..
 ```
-To launch linters and tests before deployment:
+To launch linters and tests before deployment (in dev environment):
 ```bash
 ./checkup.sh
+```
+Run / deploy:
+```bash
+docker-compose up --build -d
 ```
 
 The project is configured for easy evaluation (Development Mode):
