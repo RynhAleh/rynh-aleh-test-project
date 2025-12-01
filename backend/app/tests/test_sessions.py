@@ -1,4 +1,5 @@
 import pytest
+
 from app.db.sessions import get_db
 
 

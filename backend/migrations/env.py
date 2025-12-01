@@ -1,9 +1,10 @@
 from logging.config import fileConfig
 
 from alembic import context
+from sqlalchemy import create_engine, pool
+
 from app.core.config import settings
 from app.models import Base
-from sqlalchemy import create_engine, pool
 
 config = context.config
 if config.config_file_name is not None:
@@ -15,13 +16,13 @@ target_metadata = Base.metadata
 def _sync_url_from_async(url: str) -> str:
     if "+asyncpg" in url:
         return url.replace("+asyncpg", "")
-    # fallback: if url contains '+driver' for postgres, remove driver part
     if "+" in url and url.startswith("postgresql"):
         return url.split("+", 1)[0] + url.split(":", 1)[1]
     return url
 
 
 def run_migrations_offline():
+    """Offline migrations (doesn't require connection)."""
     sync_url = _sync_url_from_async(settings.DATABASE_URL)
     context.configure(
         url=sync_url,
@@ -34,6 +35,7 @@ def run_migrations_offline():
 
 
 def run_migrations_online():
+    """Online migrations (with DB connection)."""
     sync_url = _sync_url_from_async(settings.DATABASE_URL)
     connectable = create_engine(sync_url, poolclass=pool.NullPool)
 

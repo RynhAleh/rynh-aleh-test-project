@@ -1,8 +1,10 @@
+import os
+
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "localhost"
+    DATABASE_URL: str | None = os.getenv("DATABASE_URL")
 
     model_config = {
         "env_file": "../.env",

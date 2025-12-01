@@ -8,8 +8,8 @@ function App() {
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/" element={<Page1 />} />
-        <Route path="/submit" element={<Page2 />} />
-        <Route path="/history" element={<Page3 />} />
+        <Route path="/api/submit" element={<Page2 />} />
+        <Route path="/api/history" element={<Page3 />} />
       </Routes>
     </Router>
   );

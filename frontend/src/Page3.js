@@ -51,7 +51,7 @@ function Page3() {
       const response = await fetch(`${API_URL}/api/history?${query}`);
       const result = await response.json();
       setData(result);
-      navigate(`/history?${query}`, { replace: true });
+      navigate(`/api/history?${query}`, { replace: true });
     } catch {}
     setLoading(false);
   };

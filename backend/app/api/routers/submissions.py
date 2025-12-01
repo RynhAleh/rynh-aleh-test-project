@@ -1,10 +1,11 @@
 from datetime import date
 
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.db.sessions import get_db
 from app.schemas import HistoryResponse, SubmissionCreate, SubmissionResponse
 from app.services.crud import create_submission, get_history
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/api", tags=["submissions"])
 

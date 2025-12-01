@@ -1,12 +1,11 @@
 import asyncio
 
 import pytest
-from app.database import Base
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-# Test DB
-TEST_DATABASE_URL = "postgresql+asyncpg://user:password@db:5432/test_db"
+from app.core.config import settings
+from app.database import Base
 
 
 @pytest.fixture(scope="session")
@@ -19,7 +18,7 @@ def event_loop():
 @pytest.fixture(scope="session")
 async def test_engine():
     """Engine for test DB"""
-    engine = create_async_engine(TEST_DATABASE_URL, echo=False)
+    engine = create_async_engine(settings.DATABASE_URL, echo=False)
 
     # Create a table once for all tests
     async with engine.begin() as conn:

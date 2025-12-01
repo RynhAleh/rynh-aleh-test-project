@@ -1,7 +1,8 @@
 import pytest
-from app.exceptions import validation_exception_handler
 from fastapi import Request
 from fastapi.exceptions import RequestValidationError
+
+from app.exceptions import validation_exception_handler
 
 
 @pytest.mark.asyncio

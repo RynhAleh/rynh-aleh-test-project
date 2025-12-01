@@ -56,7 +56,7 @@ function Page2() {
       </form>
       {success && (
         <div className="success">
-          Data saved successfully! <Link to="/history">Go to Page 3</Link>
+          Data saved successfully! <Link to="/api/history">Go to Page 3</Link>
         </div>
       )}
       {errors.general && <p className="error">{errors.general[0]}</p>}

@@ -1,8 +1,9 @@
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
-from app.middleware import RandomDelayMiddleware
 from fastapi import Request
+
+from app.middleware import RandomDelayMiddleware
 
 
 @pytest.mark.asyncio
