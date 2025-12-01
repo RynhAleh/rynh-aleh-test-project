@@ -6,13 +6,10 @@ WORKDIR /app
 
 COPY pyproject.toml poetry.lock .
 
-RUN poetry config virtualenvs.create false \
-&& poetry install --only main --no-interaction --no-ansi
+RUN poetry config virtualenvs.create false && \
+		poetry install --no-interaction --no-ansi
 
 COPY . .
 
-CMD ["sh", "-c", " \
-#    python -m alembic revision --autogenerate -m 'initial' && \
-    python -m alembic upgrade head && \
-    exec uvicorn app.main:app --host 0.0.0.0 --port 80 \
-"]
+CMD ["sh", "-c", "python3 -m alembic upgrade head && \
+    exec uvicorn app.main:app --host 0.0.0.0 --port 80"]

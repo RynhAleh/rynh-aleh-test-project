@@ -1,6 +1,7 @@
-from pydantic import BaseModel, field_validator, Field
 from datetime import date
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class SubmissionCreate(BaseModel):
@@ -8,12 +9,12 @@ class SubmissionCreate(BaseModel):
     first_name: str = Field(..., min_length=1)
     last_name: str = Field(..., min_length=1)
 
-    @field_validator('first_name', 'last_name')
+    @field_validator("first_name", "last_name")
     @classmethod
     def no_whitespace(cls, v: str, info) -> str:
-        if ' ' in v:
-            nice_field = info.field_name.replace('_', ' ')
-            raise ValueError(f'No whitespace in {nice_field} is allowed')
+        if " " in v:
+            nice_field = info.field_name.replace("_", " ")
+            raise ValueError(f"No whitespace in {nice_field} is allowed")
         return v
 
 

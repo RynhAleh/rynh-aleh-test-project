@@ -1,19 +1,19 @@
-# backend/app/api/routers/submissions.py
-# If you need settings in routers, add Depends(get_settings)
+from datetime import date
+
+from app.db.sessions import get_db
+from app.schemas import HistoryResponse, SubmissionCreate, SubmissionResponse
+from app.services.crud import create_submission, get_history
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from ...schemas import SubmissionCreate, SubmissionResponse, HistoryResponse
-from ...services.crud import create_submission, get_history
-from ...db.sessions import get_db
-# from ...core.config import Settings, get_settings  # Import if needed
-from datetime import date
 
 router = APIRouter(prefix="/api", tags=["submissions"])
 
 
 @router.post("/submit", response_model=SubmissionResponse)
 async def submit(submission: SubmissionCreate, db: AsyncSession = Depends(get_db)):
-    await create_submission(db, submission.date, submission.first_name, submission.last_name)
+    await create_submission(
+        db, submission.date, submission.first_name, submission.last_name
+    )
     return {"success": True}
 
 
@@ -22,6 +22,6 @@ async def history(
     date: date,
     first_name: str | None = None,
     last_name: str | None = None,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     return await get_history(db, date, first_name, last_name)

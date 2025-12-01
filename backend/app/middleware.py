@@ -1,6 +1,7 @@
 import asyncio
 import random
-from fastapi import Request, Response
+
+from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 
 
@@ -11,7 +12,9 @@ class RandomDelayMiddleware(BaseHTTPMiddleware):
             "/api/submit",
             "/api/history",
         ):
-            await asyncio.sleep(random.uniform(0.1, 3.0))  # Async sleep to avoid blocking event loop
+            await asyncio.sleep(
+                random.uniform(0.1, 3.0)
+            )  # Async sleep to avoid blocking event loop
 
         response = await call_next(request)
         return response

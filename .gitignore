@@ -4,6 +4,7 @@ __pycache__/
 *.pyd
 .venv/
 .idea
+.coverage
 /.env
 db*.sqlite3
 /db.sqbpro
