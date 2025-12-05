@@ -33,3 +33,10 @@ For testing, use curl as in the task.
 Unique selects in Page3 fetch all possible names by querying history with today's date (minimal, no extra endpoint).
 
 *Note: For a real production environment, I would set up Nginx as a reverse proxy, configure SSL (Let's Encrypt), and use multi-stage Docker builds to serve static frontend files.*
+
+#### MVP vs Current version:
+- main.py -> layered (core/config, db/session, api/routers, services/crud, schemas), connected routers via APIRouter
+- Base.metadata.create_all() -> replaced with Alembic/SQLAlchemy migrations (docker command at the start of the service) so that the scheme is manageable and portable
+- pip, requirements.txt -> switched to Poetry with pyproject.toml/poetry.lock, fixed versions and dev dependencies (uvicorn, ruff, black, mypy, isort, pytest)
+- Tests -> tests added with coverage and creation of a test database (using all Alembic migrations)
+- Linters -> linters added (ruff, mypy, black, isort)
